@@ -5,10 +5,10 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import es.jarroyo.koinexampleapplication.R
 import es.jarroyo.koinexampleapplication.data.repository.DataRepository
 import kotlinx.android.synthetic.main.activity_scrolling.*
+import kotlinx.android.synthetic.main.content_scrolling.*
 import org.koin.android.ext.android.inject
 
 class ScrollingActivity : AppCompatActivity() {
@@ -24,8 +24,8 @@ class ScrollingActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
-        Toast.makeText(this, "Call Repository ${dataRepository.getData()}", Toast.LENGTH_LONG).show()
 
+        activity_scrolling_tv.text = dataRepository.getData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

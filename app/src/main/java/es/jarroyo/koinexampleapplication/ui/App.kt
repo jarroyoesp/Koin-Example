@@ -13,7 +13,7 @@ class App: Application() {
     override fun onCreate() {
         super.onCreate()
 
-        MockNetworkSystem.mIsNetworkAvailable = false
+        MockNetworkSystem.mIsNetworkAvailable = true
 
         // Start Koin
         startKoin(this, listOf(AppModule().appModule))

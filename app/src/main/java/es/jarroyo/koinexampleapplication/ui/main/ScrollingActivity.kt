@@ -1,19 +1,25 @@
 package es.jarroyo.koinexampleapplication.ui.main
 
+import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import es.jarroyo.koinexampleapplication.R
+import es.jarroyo.koinexampleapplication.data.Response
 import es.jarroyo.koinexampleapplication.data.repository.DataRepository
+import es.jarroyo.koinexampleapplication.ui.viewModel.data.*
 import kotlinx.android.synthetic.main.activity_scrolling.*
 import kotlinx.android.synthetic.main.content_scrolling.*
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class ScrollingActivity : AppCompatActivity() {
-
     val dataRepository: DataRepository by inject()
+    val getDataViewModel: GetDataViewModel by viewModel{ parametersOf(dataRepository)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,8 +30,8 @@ class ScrollingActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
-
-        activity_scrolling_tv.text = dataRepository.getData()
+        observeGetDataViewModel()
+        getDataViewModel.getData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -42,6 +48,31 @@ class ScrollingActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    /****************************************************************************
+     * OBSERVER
+     ***************************************************************************/
+    /** GET DATA **/
+    private fun observeGetDataViewModel() {
+        getDataViewModel.dataLiveData.observe(this, dataObserver)
+    }
+
+    private val dataObserver = Observer<GetDataState> { state ->
+        state?.let {
+            when (state) {
+                is SuccessGetDataState -> {
+                    val response = it.response as Response.Success
+                    activity_scrolling_tv.text = response.data
+                }
+                is LoadingGetDataState -> {
+                    Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+                }
+                is ErrorGetDataState -> {
+                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 }

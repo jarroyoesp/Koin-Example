@@ -9,17 +9,13 @@ import android.view.MenuItem
 import android.widget.Toast
 import es.jarroyo.koinexampleapplication.R
 import es.jarroyo.koinexampleapplication.data.Response
-import es.jarroyo.koinexampleapplication.data.repository.DataRepository
 import es.jarroyo.koinexampleapplication.ui.viewModel.data.*
 import kotlinx.android.synthetic.main.activity_scrolling.*
 import kotlinx.android.synthetic.main.content_scrolling.*
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
 class ScrollingActivity : AppCompatActivity() {
-    val dataRepository: DataRepository by inject()
-    val getDataViewModel: GetDataViewModel by viewModel{ parametersOf(dataRepository)}
+    val getDataViewModel: GetDataViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

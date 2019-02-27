@@ -14,7 +14,7 @@ dependencies {
 }
 ```
 
-In you Application wrapper you have to start Koin:
+In you Application wrapper you have to start Koin indicating which modules you want to load:
 ```
 class App: Application() {
 

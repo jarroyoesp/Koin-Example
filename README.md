@@ -6,11 +6,13 @@ launched you can set with implementation will be used. This is very useful when 
 ## How to use
 To use KOIN first of all you have to add this dependency to your build.gradle file:
 
+```
 dependencies {
     ....
     // Koin for Android
     compile 'org.koin:koin-android:1.0.2'
 }
+```
 
 In you Application wrapper you have to start Koin:
 ```
